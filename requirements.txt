@@ -1,8 +1,9 @@
 appnope==0.1.0
 bleach==1.5.0
-certifi==2017.4.17
+certifi==2017.7.27.1
 chardet==3.0.4
 CherryPy==3.8.0
+click==6.7
 cycler==0.10.0
 decorator==4.0.11
 entrypoints==0.2.2
@@ -25,6 +26,7 @@ jupyter-core==4.3.0
 MarkupSafe==0.23
 matplotlib==2.0.2
 mistune==0.7.4
+nba-py==0.1.1a2
 nbconvert==5.2.1
 nbformat==4.3.0
 notebook==5.0.0
@@ -35,6 +37,7 @@ pandas==0.20.2
 pandocfilters==1.4.1
 pexpect==4.2.1
 pickleshare==0.7.4
+plotly==2.0.11
 prompt-toolkit==1.0.14
 ptyprocess==0.5.1
 pyasn1==0.2.3
@@ -43,10 +46,11 @@ Pygments==2.2.0
 pygsheets==1.1.1
 pyparsing==2.1.4
 python-dateutil==2.6.0
+python-dotenv==0.6.4
 pytz==2017.2
 pyzmq==16.0.2
 qtconsole==4.3.0
-requests==2.18.1
+requests==2.14.2
 requests-oauthlib==0.8.0
 rsa==3.4.2
 scipy==0.19.0
@@ -59,6 +63,6 @@ tornado==4.5.1
 tqdm==4.14.0
 traitlets==4.3.2
 uritemplate==3.0.0
-urllib3==1.21.1
+urllib3==1.22
 wcwidth==0.1.7
 widgetsnbextension==2.0.0
