@@ -1,13 +1,13 @@
 import fitbit
 import os
 import json
-import pandas as pd
-from tqdm import tqdm
 from dotenv import load_dotenv, find_dotenv
 
 
-class ActivityData(object):
-    def __init__(self):
+class FitbitData(object):
+
+    def __init__(self, base_date, data_type):
+
         # find .env automagically by walking up directories until it's found
         dotenv_path = find_dotenv()
 
@@ -26,27 +26,43 @@ class ActivityData(object):
             refresh_token=refresh_token,
             expires_at=expires_at)
 
-        self.raw_dir = os.path.join(os.pardir, os.pardir, 'data', 'raw')
+        self.base_date = base_date
 
-    def download_intraday(self, base_date):
-        intraday = self.authd_client.intraday_time_series(
-            'activities/steps', base_date=base_date, detail_level='1min')
-        return intraday
+        self.data_type = data_type
 
-    def load_intraday(self, base_date):
+        file_name = "{}_{}.json".format(
+            self.data_type, str(self.base_date.date()))
+        project_dir = '/Users/rbussman/Projects/sleep-bit'
+        raw_dir = os.path.join(project_dir, 'data', 'raw')
+        self.file_path = os.path.join(raw_dir, file_name)
 
-        file_name = "intraday_{}".format(base_date)
-        file_path = os.path.join(self.raw_dir, file_name)
+    def download_from_fitbit(self):
+
+        if self.data_type == 'intraday':
+
+            data = self.authd_client.intraday_time_series(
+                'activities/steps', base_date=self.base_date,
+                detail_level='1min')
+
+        elif self.data_type == 'sleep':
+            data = self.authd_client.get_sleep(self.base_date)
+
+        else:
+            print("data_type must be `intraday` or `sleep`")
+            data = None
+
+        return data
+
+    def load_from_disk(self):
         try:
-            with open(file_path, 'r') as data_file:
-                intraday = json.load(data_file)
+            with open(self.file_path, 'r') as data_file:
+                data = json.load(data_file)
         except OSError:
-            intraday = self.download_intraday(base_date)
+            data = self.download_from_fitbit()
 
-        return intraday
+        return data
 
-    def write_intraday(self, intraday, base_date):
-        file_name = "intraday_{}".format(base_date)
-        file_path = os.path.join(self.raw_dir, file_name)
-        with open(file_path, 'w') as data_file:
-            json.dump(intraday, data_file)
+    def write_to_disk(self, data):
+        with open(self.file_path, 'w') as data_file:
+            json.dump(data, data_file)
+
