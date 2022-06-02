@@ -9,7 +9,7 @@ decorator==4.0.11
 entrypoints==0.2.2
 fitbit==0.3.0
 google-api-python-client==1.6.2
-html5lib==0.999
+html5lib==0.99999999
 httplib2==0.10.3
 idna==2.5
 ipykernel==4.6.1
